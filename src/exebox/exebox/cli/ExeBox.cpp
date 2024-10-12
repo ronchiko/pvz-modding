@@ -2,6 +2,7 @@
 #include "framework/log/LogPublisher.h"
 
 #include "exebox/cli/api/ExeBoxApi.h"
+#include "exebox/cli/ExeBoxSettings.h"
 #include "exebox/cli/log/CliLogger.h"
 #include "exebox/cli/ExeBox.h"
 
@@ -27,6 +28,7 @@ void main(const std::vector<std::string>& arguments)
 	api::initializeApi();
 
 	framework::log::info() << "ExeBox is starting";
+	const auto settings = parseSettings(arguments);
 }
 
 }
