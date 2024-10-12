@@ -1,6 +1,7 @@
 #include "framework/log/Log.h"
 #include "framework/log/LogPublisher.h"
 
+#include "exebox/cli/api/ExeBoxApi.h"
 #include "exebox/cli/log/CliLogger.h"
 #include "exebox/cli/ExeBox.h"
 
@@ -23,6 +24,7 @@ void registerLoggers()
 void main(const std::vector<std::string>& arguments)
 {
 	registerLoggers();
+	api::initializeApi();
 
 	framework::log::info() << "ExeBox is starting";
 }
