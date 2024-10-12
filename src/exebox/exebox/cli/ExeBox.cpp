@@ -4,6 +4,8 @@
 #include "exebox/cli/api/ExeBoxApi.h"
 #include "exebox/cli/ExeBoxSettings.h"
 #include "exebox/cli/log/CliLogger.h"
+#include "exebox/module/HaltedExecutable.h"
+
 #include "exebox/cli/ExeBox.h"
 
 namespace exebox {
@@ -29,6 +31,12 @@ void main(const std::vector<std::string>& arguments)
 
 	framework::log::info() << "ExeBox is starting";
 	const auto settings = parseSettings(arguments);
+
+	try {
+		auto runtime = createHaltedRuntime(settings.mainPath);
+	} catch(const std::exception& e) {
+		framework::log::error() << e.what();
+	}
 }
 
 }
