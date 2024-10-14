@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace exebox::hook {
+namespace framework::hook {
 
 struct FixedAddress
 {

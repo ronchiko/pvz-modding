@@ -4,9 +4,9 @@
 #include "framework/log/Log.h"
 #include "framework/memory/ScopedMemoryProtection.h"
 
-#include "exebox/hook/ForwardHook.h"
+#include "framework/hook/ForwardHook.h"
 
-namespace exebox::hook {
+namespace framework::hook {
 
 namespace {
 

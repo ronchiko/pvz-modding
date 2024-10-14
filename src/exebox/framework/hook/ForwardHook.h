@@ -3,11 +3,10 @@
 #include <memory>
 #include <vector>
 
-#include "exebox/hook/FixedAddress.h"
+#include "framework/hook/FixedAddress.h"
 
 
-namespace exebox::hook
-{
+namespace framework::hook {
 
 namespace detail {
 

@@ -3,9 +3,9 @@
 #include "framework/memory/ScopedMemoryProtection.h"
 #include "framework/pe/ImageImportDescriptors.h"
 
-#include "exebox/hook/ImportHook.h"
+#include "framework/hook/ImportHook.h"
 
-namespace exebox::hook {
+namespace framework::hook {
 
 namespace detail {
 
@@ -53,7 +53,7 @@ void ImportHookBuilder::installHooks()
 
 }
 
-detail::ImportHookBuilder createImportHook(IModule& module, std::string hookedModuleName)
+detail::ImportHookBuilder createImportHook(exebox::IModule& module, std::string hookedModuleName)
 {
 	return detail::ImportHookBuilder(const_cast<void *>(module.address()), std::move(hookedModuleName));
 }

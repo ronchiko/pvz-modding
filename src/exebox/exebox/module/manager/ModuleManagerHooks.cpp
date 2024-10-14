@@ -1,10 +1,11 @@
+#include <Windows.h>
+
 #include <filesystem>
 
 #include "framework/log/Log.h"
+#include "framework//hook/ImportHook.h"
 
-#include "exebox/hook/ImportHook.h"
 #include "exebox/module/manager/ModuleManager.h"
-#include "exebox/module/modules/NativeModule.h"
 
 
 #include "exebox/module/manager/ModuleManagerHooks.h"
@@ -76,7 +77,7 @@ DWORD WINAPI getModuleFileNameHook(const void *moduleAddress, const LPSTR result
 
 void installManagerHooks(IModule &module)
 {
-	hook::createImportHook(module, "KERNEL32.dll")
+	framework::hook::createImportHook(module, "KERNEL32.dll")
 		.hook("LoadLibraryA", loadLibraryHook)
 		.hook("GetModuleHandleA", getModuleHandle)
 		.hook("FreeLibrary", freeLibraryHook)

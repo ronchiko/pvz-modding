@@ -3,10 +3,10 @@
 #include <string>
 #include <unordered_map>
 
-#include "exebox/module/modules/CustomLoadedModule.h"
+#include "exebox/api/moduleManager/IModule.h"
 
 
-namespace exebox::hook {
+namespace framework::hook {
 
 namespace detail {
 
@@ -58,28 +58,12 @@ ImportHookBuilder& ImportHookBuilder::hook(std::string functionName, FunctionT* 
 	@param module - The address of the module we want to add import hooks for.
 	@param hookedModuleName - The name of the module we want to hook.
  */
-detail::ImportHookBuilder createImportHook(IModule& module, std::string hookedModuleName);
+detail::ImportHookBuilder createImportHook(exebox::IModule& module, std::string hookedModuleName);
 
 struct ImportHookDefinition
 {
 	std::string functionName;
 	void *function;
 };
-
-class ImportHookGuard
-{
-public:
-	using memory_t = std::vector<int>;
-
-};
-
-/**
-	Installs IAT hooks on a specific loaded module.
-
-	@param module - The module to install the hooks on.
-	@param moduleName - The name of the imported module to place the hooks on.
-	@param functions - The list of functions to hook.
- */
-void installImportHooks(IModule *module, const std::string& moduleName, std::initializer_list<ImportHookDefinition> functions);
 
 }
