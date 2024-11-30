@@ -33,6 +33,11 @@ void removeLogger(ILogger& logger)
 	g_RegisteredLoggers.erase(iterator);
 }
 
+std::span<std::reference_wrapper<ILogger>> getAllRegisteredLoggers()
+{
+	return g_RegisteredLoggers;
+}
+
 void writeLog(const Severity severity, const std::string& message, const Time time)
 {
 	for(auto& logger : g_RegisteredLoggers)

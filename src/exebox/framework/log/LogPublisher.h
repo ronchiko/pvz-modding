@@ -1,5 +1,7 @@
 #pragma once
 
+#include <span>
+
 #include "framework/log/ILogger.h"
 
 namespace framework::log::publisher {
@@ -13,6 +15,11 @@ void addLogger(ILogger& logger);
 	Removes a logger from the publisher.
  */
 void removeLogger(ILogger& logger);
+
+/**
+	Returns all the registered loggers.
+ */
+std::span<std::reference_wrapper<ILogger>> getAllRegisteredLoggers();
 
 /**
 	Publishes a log message to all the registered loggers.
