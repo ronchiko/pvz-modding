@@ -1,6 +1,8 @@
 #pragma once
 
 #include "exebox/api/moduleManager/IModuleManager.h"
+#include "exebox/api/plugin/IPluginManager.h"
+
 
 namespace exebox {
 
@@ -13,6 +15,11 @@ public:
 		Returns ExeBox's module manager.
 	 */
 	virtual IModuleManager& moduleManager() = 0;
+
+	/**
+		Returns ExeBox's plugin manager.
+	 */
+	virtual IPluginManager& pluginManager() = 0;
 };
 
 }
