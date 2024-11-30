@@ -29,3 +29,4 @@ objdir  ("%{wks.location}/.build/obj/%{cfg.buildcfg}/%{cfg.system}/%{cfg.archite
 
 
 include "src/exebox"
+include "src/pvz"
