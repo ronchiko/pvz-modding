@@ -9,3 +9,7 @@ project "ExeBox"
     links {
         "framework"
     }
+
+    filter {"action:vs*"}
+        linkoptions "/BASE:0xF000000"
+    filter{}
