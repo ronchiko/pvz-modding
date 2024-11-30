@@ -61,16 +61,16 @@ class VirtualMemory : public VirtualMemoryView
 public:
 	explicit VirtualMemory(uint8_t *address, size_t length);
 
+	/**
+		Allocates a piece of RW memory with a given length.
+
+		@param length - The length of the memory.
+		@param preferredAddress - The preferred address of the memory.
+	 */
+	static VirtualMemory allocate(size_t length, std::optional<uintptr_t> preferredAddress = std::nullopt);
+
 private:
 	std::unique_ptr<uint8_t, VirtualMemoryDeleter> m_Owner;
 };
-
-/**
-	Allocates a piece of RW memory with a given length.
-
-	@param length - The length of the memory.
-	@param preferredAddress - The preferred address of the memory.
- */
-VirtualMemory allocate(size_t length, std::optional<uintptr_t> preferredAddress = std::nullopt);
 
 }

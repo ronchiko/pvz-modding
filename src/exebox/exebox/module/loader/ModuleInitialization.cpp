@@ -10,7 +10,7 @@ framework::VirtualMemory allocateMemoryForModule(const size_t length,
 												 const bool forceDesiredBase)
 {
 	try {
-		return framework::allocate(length, desiredBase);
+		return framework::VirtualMemory::allocate(length, desiredBase);
 	} catch(const framework::WindowsException& e) {
 		if(forceDesiredBase) {
 			framework::log::error() << "Failed to allocate module at desired address: 0x" << std::hex << desiredBase
@@ -18,7 +18,7 @@ framework::VirtualMemory allocateMemoryForModule(const size_t length,
 			throw;
 		}
 
-		return framework::allocate(length);
+		return framework::VirtualMemory::allocate(length);
 	}
 }
 

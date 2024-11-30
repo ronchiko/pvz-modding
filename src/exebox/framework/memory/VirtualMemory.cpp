@@ -69,7 +69,7 @@ VirtualMemory::VirtualMemory(uint8_t *address, const size_t length)
 	, m_Owner(address, VirtualMemoryDeleter{})
 {}
 
-VirtualMemory allocate(const size_t length, const std::optional<uintptr_t> preferredAddress)
+VirtualMemory VirtualMemory::allocate(const size_t length, const std::optional<uintptr_t> preferredAddress)
 {
 	const auto address = VirtualAlloc(reinterpret_cast<PVOID>(preferredAddress.value_or(0)),
 									  length,
@@ -82,6 +82,5 @@ VirtualMemory allocate(const size_t length, const std::optional<uintptr_t> prefe
 	VirtualAlloc(address, length, MEM_COMMIT, PAGE_READWRITE);
 	return VirtualMemory(static_cast<uint8_t *>(address), length);
 }
-
 
 }
