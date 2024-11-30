@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "framework/hook/FixedAddress.h"
+#include "framework/hook/assembly/ExecutableAddress.h"
 
 
 namespace framework::hook {
@@ -12,6 +13,9 @@ namespace detail {
 
 template<typename ReturnT, typename... ArgTs>
 using ForwardHookType = ReturnT (*)(ArgTs...);
+
+template<typename ReturnT, typename ObjT, typename... ArgTs>
+using ClassForwardHookType = ReturnT(ObjT::*)(ArgTs...);
 
 struct ForwardHookRemover
 {
@@ -32,19 +36,11 @@ public:
 		@param hookAddress - The address to place the hook at.
 		@param function - The function to call when the address is reached.
 	 */
-	template<typename ReturnT, typename... ArgTs>
-	explicit ForwardHook(FixedAddress hookAddress, detail::ForwardHookType<ReturnT, ArgTs...> function);
+	explicit ForwardHook(FixedAddress hookAddress, assembly::ExecutableAddress function);
 
 private:
-	explicit ForwardHook(FixedAddress hookAddress, void *functionAddress);
-
-	void *m_HookFunction;
+	assembly::ExecutableAddress m_HookFunction;
 	std::unique_ptr<void, detail::ForwardHookRemover> m_Hook;
 };
-
-template <typename ReturnT, typename ... ArgTs>
-ForwardHook::ForwardHook(FixedAddress hookAddress, const detail::ForwardHookType<ReturnT, ArgTs...> function)
-	: ForwardHook(hookAddress, reinterpret_cast<void*>(function))	
-{}
 
 }

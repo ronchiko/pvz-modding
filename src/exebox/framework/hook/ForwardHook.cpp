@@ -11,9 +11,9 @@ namespace framework::hook {
 namespace {
 
 const std::vector<uint8_t> JUMP_INSTRUCTIONS = {
-	0xCC,						  // INT 3
-	0xB8, 0xFF, 0xFF, 0xFF, 0xFF, // MOVE EAX, 0xFFFFFFFF
-	0xFF, 0x20,					  // JMP DWORD PTR [EAX]
+	0x90,						      // INT 3
+	0xB8, 0xFF, 0xFF, 0xFF, 0xFF,     // MOVE EAX, 0xFFFFFFFF
+	0xFF, 0x20,					      // JMP DWORD PTR [EAX]
 };
 
 std::vector<uint8_t> createAbsoluteJumpIntrinsic(void *targetAddress)
@@ -37,14 +37,14 @@ void detail::ForwardHookRemover::operator()(void *ptr) const
 	std::memcpy(ptr, previousContent.data(), previousContent.size());
 }
 
-ForwardHook::ForwardHook(FixedAddress hookAddress, void *functionAddress)
-	: m_HookFunction(functionAddress)
+ForwardHook::ForwardHook(FixedAddress hookAddress, assembly::ExecutableAddress function)
+	: m_HookFunction(std::move(function))
 {
 	std::vector<std::byte> previousContent;
 	{
 		auto memoryGuard = scopedWritableMemory(framework::VirtualMemoryView{ hookAddress, 256 });
 
-		auto hookInstructions = createAbsoluteJumpIntrinsic(&m_HookFunction);
+		auto hookInstructions = createAbsoluteJumpIntrinsic(m_HookFunction.address());
 		previousContent.reserve(hookInstructions.size());
 		std::ranges::copy_n(hookAddress.as<std::byte>(), hookInstructions.size(), previousContent.data());
 
@@ -54,6 +54,5 @@ ForwardHook::ForwardHook(FixedAddress hookAddress, void *functionAddress)
 	framework::log::info() << "Placed forward hook at: 0x" << std::hex << hookAddress.address;
 	m_Hook = { hookAddress, detail::ForwardHookRemover{ std::move(previousContent) } };
 }
-
 
 }
