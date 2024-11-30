@@ -12,9 +12,11 @@ public:
 	explicit ExeBoxApi();
 
 	IModuleManager& moduleManager() override;
+	IPluginManager& pluginManager() override;
 
 private:
 	std::unique_ptr<IModuleManager> m_ModuleManager;
+	std::unique_ptr<IPluginManager> m_PluginManager;
 };
 
 /**
